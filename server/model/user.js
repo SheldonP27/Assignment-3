@@ -1,7 +1,7 @@
 const { trim, type } = require('jquery');
 let mongoose = require('mongoose');
 let passportLocalMongoose = require('passport-local-mongoose');
-const { collection } = require('./book');
+const Car = require('./car');
 
 let User = mongoose.Schema({
     username:

@@ -5,14 +5,6 @@ let mongoose = require('mongoose');
 // connect to our Car model
 let Car = require('../model/car');
 
-// auth guard
-function requireAuth(req, res, next) {
-  if (!req.isAuthenticated()) {
-    return res.redirect('/login');
-  }
-  next();
-}
-
 // READ – list all cars
 router.get('/', async (req, res, next) => {
   try {
@@ -30,7 +22,7 @@ router.get('/', async (req, res, next) => {
 });
 
 // GET – Add Car page
-router.get('/add', requireAuth, (req, res, next) => {
+router.get('/add', (req, res, next) => {
   res.render('Cars/add', {
     title: 'Add Car',
     displayName: req.user ? req.user.displayName : ''
@@ -38,7 +30,7 @@ router.get('/add', requireAuth, (req, res, next) => {
 });
 
 // POST – process Add Car
-router.post('/add', requireAuth, async (req, res, next) => {
+router.post('/add', async (req, res, next) => {
   try {
     let newCar = new Car({
       make: req.body.make,
@@ -60,7 +52,7 @@ router.post('/add', requireAuth, async (req, res, next) => {
 });
 
 // GET – Edit page
-router.get('/edit/:id', requireAuth, async (req, res, next) => {
+router.get('/edit/:id', async (req, res, next) => {
   try {
     let id = req.params.id;
     let carToEdit = await Car.findById(id);
@@ -77,7 +69,7 @@ router.get('/edit/:id', requireAuth, async (req, res, next) => {
 });
 
 // POST – process Edit
-router.post('/edit/:id', requireAuth, async (req, res, next) => {
+router.post('/edit/:id', async (req, res, next) => {
   try {
     let id = req.params.id;
 
@@ -101,7 +93,7 @@ router.post('/edit/:id', requireAuth, async (req, res, next) => {
 });
 
 // GET – Delete confirmation page
-router.get('/delete/:id', requireAuth, async (req, res, next) => {
+router.get('/delete/:id', async (req, res, next) => {
   try {
     let id = req.params.id;
     let carToDelete = await Car.findById(id);
@@ -118,7 +110,7 @@ router.get('/delete/:id', requireAuth, async (req, res, next) => {
 });
 
 // POST – actually delete the car
-router.post('/delete/:id', requireAuth, async (req, res, next) => {
+router.post('/delete/:id', async (req, res, next) => {
   try {
     let id = req.params.id;
     await Car.deleteOne({ _id: id });

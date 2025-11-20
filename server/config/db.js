@@ -1,1 +1,3 @@
-module.exports={"URI":"mongodb://localhost:27017/bookstore"}
+import dotenv from 'dotenv';
+const mongoURI = process.env.MONGO_URI;
+export default mongoURI;

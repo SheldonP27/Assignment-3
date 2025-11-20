@@ -16,12 +16,15 @@ var app = express();
 let userModel = require('../model/user');
 let User = userModel.User;
 // point mongoose to the DB URI
-mongoose.connect(DB.URI);
-let mongoDB = mongoose.connection;
-mongoDB.on('error', console.error.bind('console','Connection Error'));
-mongoDB.once('open',()=>{
-  console.log('Connected to the MongoDB');
-});
+require('dotenv').config();
+
+console.log("Loaded MONGO_URI:", process.env.MONGO_URI);
+
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.error("Connection Error:", err));
+
 // Set-up Express Session
 app.use(session({
   secret:"Somesecret",
@@ -69,5 +72,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {title:'Error'});
 });
+
+
 
 module.exports = app;

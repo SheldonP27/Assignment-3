@@ -1,1 +1,93 @@
+/* Page background: gradient requested by user */
+body {
+	padding-bottom: 80px;
+	background: linear-gradient(45deg,#F06967,#F08167,#F09A68,#F0B167,#F0C367,#F7DDCD);
+	background-attachment: fixed;
+	background-size: cover;
+}
 
+/* Center the fixed-bottom footer text horizontally */
+footer .navbar.fixed-bottom {
+	justify-content: center;
+}
+
+footer .navbar.fixed-bottom .navbar-text {
+	width: 100%;
+	text-align: center;
+	margin: 0;
+}
+
+/* Center index page content vertically and horizontally */
+.index-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: calc(100vh - 160px);
+	text-align: center;
+	padding: 20px;
+}
+
+.index-center .index-inner {
+	max-width: 760px;
+	/* raise the centered block higher on the page */
+	transform: translateY(-20%);
+}
+
+/* Responsive: reduce nudge on small screens */
+@media (max-width: 576px) {
+	.index-center {
+		min-height: calc(100vh - 140px);
+		padding: 12px;
+	}
+	.index-center .index-inner {
+		transform: translateY(-10%);
+	}
+}
+
+/* Navbar link color: */
+.nav .nav-link,
+header .nav-link,
+.link-body-emphasis {
+	color: #eb9008 !important;
+}
+.nav .nav-link:hover,
+.nav .nav-link:focus,
+.nav .nav-link.active {
+	color: #fdb658 !important; /* slightly darker on hover/active */
+}
+
+/* Ensure the top header/nav background is black for contrast */
+header.d-flex {
+	background-color: #2e2d2d;
+	color: #ffffff;
+}
+
+header.d-flex.border-bottom {
+	border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+@media (max-width: 600px) {
+	.nav .nav-link,
+	header .nav-link,
+	.link-body-emphasis {
+	color: #eb0808 !important;
+}
+	.nav .nav-link:hover,
+	.nav .nav-link:focus,
+	.nav .nav-link.active {
+	color: #fd5858 !important; /* slightly darker on hover/active */
+}
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+	.nav .nav-link,
+	header .nav-link,
+	.link-body-emphasis {
+	color: #e7eb08 !important;
+}
+	.nav .nav-link:hover,
+	.nav .nav-link:focus,
+	.nav .nav-link.active {
+	color: #fdfa58 !important; /* slightly darker on hover/active */
+}
+}

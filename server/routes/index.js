@@ -18,18 +18,9 @@ router.get('/home', function(req, res, next) {
   res.render('index', { title: 'Home',displayName: req.user?req.user.displayName:"" });
 });
 
-/* GET About page. */
-router.get('/about', function(req, res, next) {
-  res.render('about', { title: 'About us',displayName: req.user?req.user.displayName:"" });
-});
-
-/* GET Contact page. */
-router.get('/contact', function(req, res, next) {
-  res.render('contact', { title: 'Contact us',displayName: req.user?req.user.displayName:"" });
-});
-
 /* GET Inventory page. */
-router.get('/inventory', function(req, res, next) {
+router.get('/Inventory', function(req, res, next) {
   res.render('cars', { title: 'Inventory',displayName: req.user?req.user.displayName:"" });
 });
+
 module.exports = router;

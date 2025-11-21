@@ -1,0 +1,19 @@
+<% include partials/header %> <!-- Include header partial for consistent head section -->
+<% include partials/main_nav %> <!-- Include main navigation partial -->
+<br> </br>
+
+ <main>
+    <form>
+        <label>Name: <input type="text" required>   </label><br>
+
+        <label>Email: <input type="email" required> </label><br>
+
+        <label>Phone: <input type="tel" pattern="[0-9]{10}" required> </label><br>
+        
+        <label>Comments: <textarea rows="4" required></textarea> </label><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</main>
+<!--footer with copyright and email-->
+<% include partials/footer %> <!-- Include footer partial for consistent footer section -->

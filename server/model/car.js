@@ -7,10 +7,9 @@ let carModel = mongoose.Schema(
     model: String,
     year: Number,
     price: Number,
-    mileage_km: Number,
+    mileage: Number,
     condition: String,
     description: String,
-    imageUrl: String
   },
   {
     collection: 'CarData'

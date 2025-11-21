@@ -10,7 +10,7 @@ router.get('/', async (req, res, next) => {
   try {
     let carList = await Car.find().sort({ year: -1 });
 
-    res.render('Cars/list', {
+    res.render('cars/list', {
       title: 'Inventory',
       CarList: carList,
       displayName: req.user ? req.user.displayName : ''
@@ -23,7 +23,7 @@ router.get('/', async (req, res, next) => {
 
 // GET – Add Car page
 router.get('/add', (req, res, next) => {
-  res.render('Cars/add', {
+  res.render('cars/add', {
     title: 'Add Car',
     displayName: req.user ? req.user.displayName : ''
   });
@@ -57,7 +57,7 @@ router.get('/edit/:id', async (req, res, next) => {
     let id = req.params.id;
     let carToEdit = await Car.findById(id);
 
-    res.render('Cars/edit', {
+    res.render('cars/edit', {
       title: 'Edit Car',
       car: carToEdit,
       displayName: req.user ? req.user.displayName : ''
@@ -81,7 +81,6 @@ router.post('/edit/:id', async (req, res, next) => {
       mileage: req.body.mileage,
       condition: req.body.condition,
       description: req.body.description,
-      imageUrl: req.body.imageUrl
     };
 
     await Car.updateOne({ _id: id }, updatedCar);
@@ -98,7 +97,7 @@ router.get('/delete/:id', async (req, res, next) => {
     let id = req.params.id;
     let carToDelete = await Car.findById(id);
 
-    res.render('Cars/delete', {
+    res.render('cars/delete', {
       title: 'Delete Car',
       car: carToDelete,
       displayName: req.user ? req.user.displayName : ''

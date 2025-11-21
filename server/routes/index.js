@@ -8,7 +8,7 @@ let User = userModel.User;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Home',
+  res.render('index', { title: 'Auto Tracker',
     displayName: req.user?req.user.displayName:""
    });
 });
@@ -20,22 +20,16 @@ router.get('/home', function(req, res, next) {
 
 /* GET About page. */
 router.get('/about', function(req, res, next) {
-  res.render('index', { title: 'About us',displayName: req.user?req.user.displayName:"" });
+  res.render('about', { title: 'About us',displayName: req.user?req.user.displayName:"" });
 });
 
-/* GET products page. */
-router.get('/products', function(req, res, next) {
-  res.render('index', { title: 'Products',displayName: req.user?req.user.displayName:"" });
-});
-
-/* GET Services page. */
-router.get('/services', function(req, res, next) {
-  res.render('index', { title: 'Services',displayName: req.user?req.user.displayName:"" });
-});
-
-/* GET home page. */
+/* GET Contact page. */
 router.get('/contact', function(req, res, next) {
-  res.render('index', { title: 'Contact us',displayName: req.user?req.user.displayName:"" });
+  res.render('contact', { title: 'Contact us',displayName: req.user?req.user.displayName:"" });
 });
 
+/* GET Inventory page. */
+router.get('/inventory', function(req, res, next) {
+  res.render('cars', { title: 'Inventory',displayName: req.user?req.user.displayName:"" });
+});
 module.exports = router;

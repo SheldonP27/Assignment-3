@@ -24,6 +24,7 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.error("Connection Error:", err));
+  
 
 // Set-up Express Session
 app.use(session({

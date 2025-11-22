@@ -1,3 +1,6 @@
-import dotenv from 'dotenv';
+const dotenv = require('dotenv');
+dotenv.config();
+
 const mongoURI = process.env.MONGO_URI;
-export default mongoURI;
+
+module.exports = mongoURI;

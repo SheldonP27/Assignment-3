@@ -6,21 +6,32 @@ let userModel = require('../model/user');
 let User = userModel.User;
 
 
-/* GET home page. */
+
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Auto Tracker',
-    displayName: req.user?req.user.displayName:""
-   });
+  res.render('index', { 
+    title: 'Auto Tracker',
+    displayName: req.user ? req.user.displayName : ''
+  });
 });
 
-/* GET home page. */
 router.get('/home', function(req, res, next) {
-  res.render('index', { title: 'Home',displayName: req.user?req.user.displayName:"" });
+  res.render('index', { 
+    title: 'Home',
+    displayName: req.user ? req.user.displayName : ''
+  });
 });
 
 /* GET Inventory page. */
 router.get('/Inventory', function(req, res, next) {
   res.render('cars', { title: 'Inventory',displayName: req.user?req.user.displayName:"" });
+});
+
+
+router.get('/login', function(req, res, next) {
+  res.render('login', { 
+    title: 'Login',
+    displayName: req.user ? req.user.displayName : ''
+  });
 });
 
 module.exports = router;

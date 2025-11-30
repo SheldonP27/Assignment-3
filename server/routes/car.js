@@ -1,11 +1,12 @@
 let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
+const { requireAuth } = require('../config/auth');  // Add this line HERE
 
 // connect to our Car model
 let Car = require('../model/car');
 
-// READ – list all cars
+// READ – list all cars (NO authentication needed - anyone can view)
 router.get('/', async (req, res, next) => {
   try {
     let carList = await Car.find().sort({ year: -1 });
@@ -21,16 +22,16 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// GET – Add Car page
-router.get('/add', (req, res, next) => {
+// GET – Add Car page (REQUIRES authentication)
+router.get('/add', requireAuth, (req, res, next) => {
   res.render('cars/add', {
     title: 'Add Car',
     displayName: req.user ? req.user.displayName : ''
   });
 });
 
-// POST – process Add Car
-router.post('/add', async (req, res, next) => {
+// POST – process Add Car (REQUIRES authentication)
+router.post('/add', requireAuth, async (req, res, next) => {
   try {
     let newCar = new Car({
       make: req.body.make,
@@ -39,8 +40,7 @@ router.post('/add', async (req, res, next) => {
       price: req.body.price,
       mileage: req.body.mileage,
       condition: req.body.condition,
-      description: req.body.description,
-      imageUrl: req.body.imageUrl
+      description: req.body.description
     });
 
     await Car.create(newCar);
@@ -51,8 +51,8 @@ router.post('/add', async (req, res, next) => {
   }
 });
 
-// GET – Edit page
-router.get('/edit/:id', async (req, res, next) => {
+// GET – Edit page (REQUIRES authentication)
+router.get('/edit/:id', requireAuth, async (req, res, next) => {
   try {
     let id = req.params.id;
     let carToEdit = await Car.findById(id);
@@ -68,8 +68,8 @@ router.get('/edit/:id', async (req, res, next) => {
   }
 });
 
-// POST – process Edit
-router.post('/edit/:id', async (req, res, next) => {
+// POST – process Edit (REQUIRES authentication)
+router.post('/edit/:id', requireAuth, async (req, res, next) => {
   try {
     let id = req.params.id;
 
@@ -80,7 +80,7 @@ router.post('/edit/:id', async (req, res, next) => {
       price: req.body.price,
       mileage: req.body.mileage,
       condition: req.body.condition,
-      description: req.body.description,
+      description: req.body.description
     };
 
     await Car.updateOne({ _id: id }, updatedCar);
@@ -91,8 +91,8 @@ router.post('/edit/:id', async (req, res, next) => {
   }
 });
 
-// GET – Delete confirmation page
-router.get('/delete/:id', async (req, res, next) => {
+// GET – Delete confirmation page (REQUIRES authentication)
+router.get('/delete/:id', requireAuth, async (req, res, next) => {
   try {
     let id = req.params.id;
     let carToDelete = await Car.findById(id);
@@ -108,8 +108,8 @@ router.get('/delete/:id', async (req, res, next) => {
   }
 });
 
-// POST – actually delete the car
-router.post('/delete/:id', async (req, res, next) => {
+// POST – actually delete the car (REQUIRES authentication)
+router.post('/delete/:id', requireAuth, async (req, res, next) => {
   try {
     let id = req.params.id;
     await Car.deleteOne({ _id: id });

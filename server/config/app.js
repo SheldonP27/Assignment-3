@@ -34,11 +34,71 @@ app.use(session({
 }))
 // initialize flash
 app.use(flash());
+// Make flash messages available in views via res.locals
+app.use(function (req, res, next) {
+  res.locals.success = req.flash('success');
+  res.locals.error = req.flash('error');
+  next();
+});
 // user authentication
 passport.use(User.createStrategy());
 // serialize and deserialize the user information
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+// initialize the passport
+// Add Google and GitHub strategies before initializing passport so routes/strategies are available
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GitHubStrategy = require('passport-github2').Strategy;
+
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  // Prefer explicit Google-specific callback URL, fall back to a sensible default for local testing
+  callbackURL: process.env.GOOGLE_CALLBACK_URL || 'http://localhost:3000/auth/google/callback'
+  },
+  async (accessToken, refreshToken, profile, done) => {
+    try {
+      let user = await User.findOne({ email: profile.emails[0].value });
+      if (!user) {
+        user = new User({
+          username: profile.emails[0].value,
+          email: profile.emails[0].value,
+          displayName: profile.displayName
+        });
+        await user.save();
+      }
+      return done(null, user);
+    } catch (err) {
+      return done(err, null);
+    }
+  }
+));
+
+passport.use(new GitHubStrategy({
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  // Prefer explicit GitHub-specific callback URL, fall back to a sensible default for local testing
+  callbackURL: process.env.GITHUB_CALLBACK_URL || 'http://localhost:3000/auth/github/callback'
+  },
+  async (accessToken, refreshToken, profile, done) => {
+    try {
+      let email = profile.emails && profile.emails[0] ? profile.emails[0].value : profile.username + '@github.com';
+      let user = await User.findOne({ username: profile.username });
+      if (!user) {
+        user = new User({
+          username: profile.username,
+          email: email,
+          displayName: profile.displayName || profile.username
+        });
+        await user.save();
+      }
+      return done(null, user);
+    } catch (err) {
+      return done(err, null);
+    }
+  }
+));
+
 // initialize the passport
 app.use(passport.initialize());
 app.use(passport.session());
@@ -57,6 +117,9 @@ app.use(express.static(path.join(__dirname, '../../node_modules')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/cars', carRouter);
+// auth routes (Google/GitHub)
+let authRouter = require('../routes/auth');
+app.use('/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -74,6 +137,6 @@ app.use(function(err, req, res, next) {
   res.render('error', {title:'Error'});
 });
 
-
+// (strategies + auth routes are defined earlier)
 
 module.exports = app;

@@ -1,33 +1,45 @@
 <div class="container"> 
   <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"> 
-    <div class="col-md-3 mb-2 mb-md-0"> <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none"> 
-      <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap">
-        <use xlink:href="#bootstrap">
-        </use>
-      </svg> 
-    </a>
-  </div> 
-      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"> 
-        <li class="nav-item">
-          <% if (title == 'Auto Tracker - Home Page' || title == 'Home Page') { %>
-            <a class="nav-link active" aria-current="page" href="/"><i class="fa-solid fa-lg fa-house"></i> Home</a>
-          <% } else { %>
-            <a class="nav-link" href="/"><i class="fa-solid fa-lg fa-house"></i> Home</a>
-          <% } %>
-        </li>
-        <li class="nav-item">
-          <% if (title == 'Auto Tracker - Inventory') { %>
-            <a class="nav-link active" aria-current="page" href="/cars">
-          <i class="fa-solid fa-lg fa-address-card"></i> Inventory
+    <div class="col-md-3 mb-2 mb-md-0"> 
+      <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none"> 
+        <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap">
+          <use xlink:href="#bootstrap"></use>
+        </svg> 
+      </a>
+    </div> 
+    
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"> 
+      <li class="nav-item">
+        <% if (title == 'Auto Tracker' || title == 'Home') { %>
+          <a class="nav-link active" aria-current="page" href="/">
+            <i class="fa-solid fa-lg fa-house"></i> Home
           </a>
-          <% } else { %>
-            <a class="nav-link" href="/cars">
-            <i class="fa-solid fa-lg fa-address-card"></i> Inventory
+        <% } else { %>
+          <a class="nav-link" href="/">
+            <i class="fa-solid fa-lg fa-house"></i> Home
           </a>
-          <% } %>
-        </li>
-      </ul> 
-        <div class="col-md-3 text-end"> 
-        </div> 
-      </header> 
-    </div>
+        <% } %>
+      </li>
+      <li class="nav-item">
+        <% if (title == 'Inventory') { %>
+          <a class="nav-link active" aria-current="page" href="/cars">
+            <i class="fa-solid fa-lg fa-car"></i> Inventory
+          </a>
+        <% } else { %>
+          <a class="nav-link" href="/cars">
+            <i class="fa-solid fa-lg fa-car"></i> Inventory
+          </a>
+        <% } %>
+      </li>
+    </ul> 
+    
+    <div class="col-md-3 text-end"> 
+      <% if (typeof displayName !== 'undefined' && displayName) { %>
+        <span class="me-2 text-white">Hello, <%= displayName %></span>
+        <a href="/auth/logout" class="btn btn-sm btn-outline-danger">Logout</a>
+      <% } else { %>
+        <a href="/login" class="btn btn-sm btn-outline-primary">Login</a>
+      <% } %>
+    </div> 
+  </header> 
+</div>
